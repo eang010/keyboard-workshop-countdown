@@ -41,21 +41,6 @@ export default function Home() {
       <Confetti
         width={windowSize.width}
         height={windowSize.height}
-        numberOfPieces={100}
-        recycle={true}
-        confettiSource={{
-          x: windowSize.width * 0.3,
-          y: windowSize.height,
-          w: windowSize.width * 0.4,
-          h: 0
-        }}
-        opacity={0.6}
-        gravity={0.3}
-        initialVelocityY={-15}
-      />
-      <Confetti
-        width={windowSize.width}
-        height={windowSize.height}
         numberOfPieces={50}
         recycle={true}
         confettiSource={{x: 0, y: 0, w: windowSize.width * 0.2, h: windowSize.height}}
