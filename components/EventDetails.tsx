@@ -36,7 +36,7 @@ export default function EventDetails({ eventDate }: { eventDate: Date }) {
         </li>
         <li className="flex items-center">
           <MapPin className="mr-2 h-5 w-5 text-text" />
-          <span>STB L01 Training Center</span>
+          <span>STB L01 Training Room</span>
         </li>
       </ul>
       <p className="mt-4">

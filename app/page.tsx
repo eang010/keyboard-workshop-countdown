@@ -110,6 +110,16 @@ export default function Home() {
           </motion.div>
         )}
       </AnimatePresence>
+      <div className="mt-auto p-4 text-center text-sm text-gray-500">
+        Created by <a 
+          href="https://www.linkedin.com/in/emilyang20/" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="hover:text-gray-700 underline"
+        >
+          Emily Ang
+        </a>
+      </div>
     </main>
   )
 }
