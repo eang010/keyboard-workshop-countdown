@@ -38,45 +38,45 @@ const switchOptions: SwitchOption[] = [
     name: "Black",
     image: "/image/Black.png?height=150&width=150",
     type: "Linear (Heavy)",
-    actuation: "2mm",
-    travel: "4mm",
-    force: "45g",
+    actuation: "2.2mm",
+    travel: "4.0mm",
+    force: "50gf",
     sound: "/audio/black-switch.mp3"
   },
   {
     name: "Blue",
     image: "/image/Blue.png?height=150&width=150",
-    type: "Clicky (Loud)",
+    type: "Clicky",
     actuation: "2.2mm",
-    travel: "4mm",
-    force: "50g",
+    travel: "4.0mm",
+    force: "50gf",
     sound: "/audio/blue-switch.mp3"
   },
   {
     name: "Brown",
     image: "/image/Brown.png?height=150&width=150",
     type: "Tactile",
-    actuation: "2mm",
-    travel: "4mm",
-    force: "55g",
+    actuation: "2.0mm",
+    travel: "3.0mm",
+    force: "40gf",
     sound: "/audio/brown-switch.mp3"
   },
   {
     name: "Red",
     image: "/image/Red.png?height=150&width=150",
     type: "Linear",
-    actuation: "1.8mm",
-    travel: "3.6mm",
-    force: "50g",
+    actuation: "2.0mm",
+    travel: "3.7mm",
+    force: "45gf",
     sound: "/audio/red-switch.mp3"
   },
   {
     name: "White",
     image: "/image/White.png?height=150&width=150",
     type: "Linear (Light)",
-    actuation: "2mm",
-    travel: "4mm",
-    force: "45g",
+    actuation: "2.0mm",
+    travel: "3.7mm",
+    force: "37gf",
     sound: "/audio/white-switch.mp3"
   },
 ]
@@ -112,30 +112,50 @@ const ExpandedImage: FC<ExpandedImageProps> = ({ src, alt, onClose }) => {
 
 interface InfoBoxProps {
   children: React.ReactNode
-  actionButton?: {
-    text: string
-    url: string
-  }
 }
 
-const InfoBox: FC<InfoBoxProps> = ({ children, actionButton }) => {
+const InfoBox: FC<InfoBoxProps> = ({ children }) => {
   return (
     <div className="flex flex-col bg-accent/5 border border-accent/10 rounded-2xl p-4 mb-6 shadow-sm">
       <div className="flex items-center gap-2">
         <Info className="w-5 h-5 text-accent/70 flex-shrink-0" />
         <p className="text-lg text-accent/80">{children}</p>
       </div>
-      {actionButton && (
-        <a 
-          href={actionButton.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 mt-3 px-4 py-2 bg-accent/10 hover:bg-accent/20 text-accent rounded-xl transition-colors self-start ml-7"
+    </div>
+  )
+}
+
+interface SwitchDetailsModalProps {
+  switchOption: SwitchOption
+  onClose: () => void
+}
+
+const SwitchDetailsModal: FC<SwitchDetailsModalProps> = ({ switchOption, onClose }) => {
+  return (
+    <div className="fixed inset-0 bg-black/50 z-50 flex items-center justify-center" onClick={onClose}>
+      <div className="relative max-w-md w-full bg-alt-bg p-6 rounded-lg mx-4" onClick={e => e.stopPropagation()}>
+        <button 
+          onClick={onClose}
+          className="absolute -top-4 -right-4 bg-alt-bg rounded-full p-2 hover:bg-accent transition-colors"
         >
-          <MapPin className="w-4 h-4" />
-          {actionButton.text}
-        </a>
-      )}
+          <X className="w-6 h-6" />
+        </button>
+        <h3 className="text-2xl font-semibold mb-4">{switchOption.name} Switch Details</h3>
+        <ul className="space-y-3">
+          <li>
+            <strong>Type:</strong> {switchOption.type}
+          </li>
+          <li>
+            <strong>Pre-Travel:</strong> {switchOption.actuation}
+          </li>
+          <li>
+            <strong>Total Travel:</strong> {switchOption.travel}
+          </li>
+          <li>
+            <strong>Actuation Force:</strong> {switchOption.force}
+          </li>
+        </ul>
+      </div>
     </div>
   )
 }
@@ -143,6 +163,7 @@ const InfoBox: FC<InfoBoxProps> = ({ children, actionButton }) => {
 const OptionsPage: FC = () => {
   const [playingSound, setPlayingSound] = useState<string | null>(null);
   const [expandedKeycap, setExpandedKeycap] = useState<KeycapOption | null>(null);
+  const [selectedSwitch, setSelectedSwitch] = useState<SwitchOption | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -237,18 +258,13 @@ const OptionsPage: FC = () => {
 
       <section>
         <h2 className="text-3xl font-semibold mb-6">Switch Options</h2>
-        <InfoBox
-          actionButton={{
-            text: "Available stores to try them out",
-            url: "https://maps.app.goo.gl/56NTcuq2jgvjHuBP8"
-          }}
-        >
-          Click on any switch image to hear its unique sound 🔊
+        <InfoBox>
+          Click image for sound 🔊
           <br />
         </InfoBox>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {switchOptions.map((switchOption, index) => (
-            <div key={index} className="bg-alt-bg p-6 rounded-lg shadow-lg">
+            <div key={index} className="bg-alt-bg p-6 rounded-lg shadow-lg flex flex-col">
               <div 
                 className="cursor-pointer transition-transform hover:scale-105 relative switch-image-container"
                 onClick={(e) => playSound(switchOption.sound, e)}
@@ -266,25 +282,28 @@ const OptionsPage: FC = () => {
                   </div>
                 )}
               </div>
-              <h3 className="text-xl font-semibold mb-4 text-center">{switchOption.name}</h3>
-              <ul className="space-y-2">
-                <li>
-                  <strong>Type:</strong> {switchOption.type}
-                </li>
-                <li>
-                  <strong>Actuation:</strong> {switchOption.actuation}
-                </li>
-                <li>
-                  <strong>Travel:</strong> {switchOption.travel}
-                </li>
-                <li>
-                  <strong>Force:</strong> {switchOption.force}
-                </li>
-              </ul>
+              <div className="flex flex-col flex-1 justify-between">
+                <h3 className="text-xl font-semibold mb-4 text-center">{switchOption.name}</h3>
+                <div className="flex justify-center">
+                  <button
+                    onClick={() => setSelectedSwitch(switchOption)}
+                    className="w-fit px-6 py-1.5 bg-main-bg hover:bg-main-bg text-accent rounded-full transition-all hover:scale-105 shadow-md"
+                  >
+                    {switchOption.type}
+                  </button>
+                </div>
+              </div>
             </div>
           ))}
         </div>
       </section>
+
+      {selectedSwitch && (
+        <SwitchDetailsModal
+          switchOption={selectedSwitch}
+          onClose={() => setSelectedSwitch(null)}
+        />
+      )}
     </div>
   )
 }
