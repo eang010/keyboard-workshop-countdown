@@ -6,7 +6,7 @@ import CountdownTimer from "../components/CountdownTimer"
 import EventDetails from "../components/EventDetails"
 import WorkshopExpectations from "../components/WorkshopExpectations"
 import AudioPlayer from "../components/AudioPlayer"
-import { ChevronDown, Keyboard } from "lucide-react"
+import { ChevronDown, Keyboard, Search } from "lucide-react"
 import { motion, AnimatePresence } from "framer-motion"
 import Confetti from 'react-confetti'
 
@@ -74,7 +74,7 @@ export default function Home() {
               href="/options"
               className="inline-flex items-center mt-8 bg-alt-bg text-text px-6 py-3 rounded-lg shadow-md hover:bg-opacity-80 transition-colors duration-200"
             >
-              <Keyboard className="mr-2" />
+              <Search className="mr-2" />
               View Keyboard Options
             </Link>
         </div>
