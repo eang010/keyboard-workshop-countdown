@@ -25,7 +25,7 @@ const keycapOptions: KeycapOption[] = [
   { name: "Cinnamon Blue", image: "/image/CinnamonBlue.png?height=200&width=200" },
   { name: "Coder", image: "/image/Coder.png?height=200&width=200" },
   { name: "Honey & Milk", image: "/image/honeymilk.png?height=200&width=200" },
-  { name: "InitialD", image: "/image/InitialD.png?height=200&width=200" },
+  { name: "Initial D", image: "/image/InitialD.png?height=200&width=200" },
   { name: "Mario", image: "/image/Mario.png?height=200&width=200" },
   { name: "Marshmallow", image: "/image/Marshmallow.png?height=200&width=200" },
   { name: "Matcha", image: "/image/Matcha.png?height=200&width=200" },
@@ -228,29 +228,31 @@ const OptionsPage: FC = () => {
         <InfoBox>For illustration purposes only 🎨</InfoBox>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {keycapOptions.map((keycap, index) => (
-            <div key={index} className="bg-alt-bg p-6 rounded-lg shadow-lg">
+            <div key={index} className="bg-alt-bg p-6 rounded-lg shadow-lg flex flex-col h-[200px]">
               <div 
-                className="cursor-pointer transition-transform hover:scale-105 relative hidden md:block"
+                className="cursor-pointer transition-transform hover:scale-105 relative hidden md:block flex-1 flex items-center justify-center"
                 onClick={() => setExpandedKeycap(keycap)}
               >
                 <Image
                   src={keycap.image || "/placeholder.svg"}
                   alt={keycap.name}
-                  width={200}
-                  height={200}
-                  className="mx-auto mb-4"
+                  width={150}
+                  height={150}
+                  className="mx-auto object-contain"
                 />
               </div>
-              <div className="md:hidden">
+              <div className="md:hidden flex-1 flex items-center justify-center">
                 <Image
                   src={keycap.image || "/placeholder.svg"}
                   alt={keycap.name}
-                  width={200}
-                  height={200}
-                  className="mx-auto mb-4"
+                  width={150}
+                  height={150}
+                  className="mx-auto object-contain"
                 />
               </div>
-              <h3 className="text-xl font-semibold text-center">{keycap.name}</h3>
+              <div className="h-[60px] flex items-center justify-center">
+                <h3 className="text-xl font-semibold text-center">{keycap.name}</h3>
+              </div>
             </div>
           ))}
         </div>
