@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, Volume2, X } from "lucide-react"
+import { ArrowLeft, Volume2, X, Info, MapPin } from "lucide-react"
 import { FC, useCallback, useState, useEffect, useRef } from 'react'
 
 interface KeycapOption {
@@ -110,6 +110,36 @@ const ExpandedImage: FC<ExpandedImageProps> = ({ src, alt, onClose }) => {
   )
 }
 
+interface InfoBoxProps {
+  children: React.ReactNode
+  actionButton?: {
+    text: string
+    url: string
+  }
+}
+
+const InfoBox: FC<InfoBoxProps> = ({ children, actionButton }) => {
+  return (
+    <div className="flex flex-col bg-accent/5 border border-accent/10 rounded-2xl p-4 mb-6 shadow-sm">
+      <div className="flex items-center gap-2">
+        <Info className="w-5 h-5 text-accent/70 flex-shrink-0" />
+        <p className="text-lg text-accent/80">{children}</p>
+      </div>
+      {actionButton && (
+        <a 
+          href={actionButton.url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-2 mt-3 px-4 py-2 bg-accent/10 hover:bg-accent/20 text-accent rounded-xl transition-colors self-start ml-7"
+        >
+          <MapPin className="w-4 h-4" />
+          {actionButton.text}
+        </a>
+      )}
+    </div>
+  )
+}
+
 const OptionsPage: FC = () => {
   const [playingSound, setPlayingSound] = useState<string | null>(null);
   const [expandedKeycap, setExpandedKeycap] = useState<KeycapOption | null>(null);
@@ -160,7 +190,7 @@ const OptionsPage: FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-main-bg to-main-bg-end text-text p-8">
       <Link href="/" className="inline-flex items-center mb-8 text-lg hover:underline">
-        <ArrowLeft className="mr-2" /> Back to Home
+        <ArrowLeft className="mr-2" /> Back ⌛
       </Link>
       <h1 className="text-4xl font-bold mb-12 text-center">Keyboard Customization Options</h1>
 
@@ -174,6 +204,7 @@ const OptionsPage: FC = () => {
 
       <section className="mb-12">
         <h2 className="text-3xl font-semibold mb-6">Keycap Options</h2>
+        <InfoBox>For illustration purposes only 🎨</InfoBox>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {keycapOptions.map((keycap, index) => (
             <div key={index} className="bg-alt-bg p-6 rounded-lg shadow-lg">
@@ -206,6 +237,15 @@ const OptionsPage: FC = () => {
 
       <section>
         <h2 className="text-3xl font-semibold mb-6">Switch Options</h2>
+        <InfoBox
+          actionButton={{
+            text: "Available stores to try them out",
+            url: "https://maps.app.goo.gl/56NTcuq2jgvjHuBP8"
+          }}
+        >
+          Click on any switch image to hear its unique sound 🔊
+          <br />
+        </InfoBox>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {switchOptions.map((switchOption, index) => (
             <div key={index} className="bg-alt-bg p-6 rounded-lg shadow-lg">
