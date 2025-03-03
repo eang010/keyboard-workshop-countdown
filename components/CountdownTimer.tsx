@@ -36,12 +36,12 @@ export default function CountdownTimer({ targetDate }: { targetDate: Date }) {
 
   return (
     <div className="bg-alt-bg p-8 rounded-lg shadow-lg max-w-4xl mx-auto">
-      <h2 className="text-3xl font-semibold mb-6 text-center">Coming Soon!</h2>
-      <div className="grid grid-cols-4 gap-6 text-center">
+      <h2 className="text-2xl md:text-3xl font-semibold mb-6 text-center">Coming Soon!</h2>
+      <div className="grid grid-cols-4 gap-2 md:gap-6 text-center">
         {Object.entries(timeLeft).map(([unit, value]) => (
-          <div key={unit} className="bg-main-bg p-6 rounded-md">
-            <div className="text-5xl font-bold mb-2">{value}</div>
-            <div className="text-xl uppercase">{unit}</div>
+          <div key={unit} className="bg-main-bg p-3 md:p-6 rounded-md">
+            <div className="text-3xl md:text-5xl font-bold mb-1 md:mb-2">{value}</div>
+            <div className="text-sm md:text-xl uppercase">{unit}</div>
           </div>
         ))}
       </div>
