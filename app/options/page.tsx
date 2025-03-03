@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import Link from "next/link"
-import { ArrowLeft, Volume2 } from "lucide-react"
+import { ArrowLeft, Volume2, X } from "lucide-react"
 import { FC, useCallback, useState, useEffect, useRef } from 'react'
 
 interface KeycapOption {
@@ -81,8 +81,38 @@ const switchOptions: SwitchOption[] = [
   },
 ]
 
+interface ExpandedImageProps {
+  src: string
+  alt: string
+  onClose: () => void
+}
+
+const ExpandedImage: FC<ExpandedImageProps> = ({ src, alt, onClose }) => {
+  return (
+    <div className="fixed inset-0 bg-black/50 z-50 hidden md:flex items-center justify-center" onClick={onClose}>
+      <div className="relative max-w-4xl max-h-[80vh] bg-alt-bg p-4 rounded-lg" onClick={e => e.stopPropagation()}>
+        <button 
+          onClick={onClose}
+          className="absolute -top-4 -right-4 bg-alt-bg rounded-full p-2 hover:bg-accent transition-colors"
+        >
+          <X className="w-6 h-6" />
+        </button>
+        <Image
+          src={src}
+          alt={alt}
+          width={800}
+          height={800}
+          className="w-auto h-auto object-contain rounded-lg"
+        />
+        <h3 className="text-2xl font-semibold text-center mt-4">{alt}</h3>
+      </div>
+    </div>
+  )
+}
+
 const OptionsPage: FC = () => {
   const [playingSound, setPlayingSound] = useState<string | null>(null);
+  const [expandedKeycap, setExpandedKeycap] = useState<KeycapOption | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -134,18 +164,40 @@ const OptionsPage: FC = () => {
       </Link>
       <h1 className="text-4xl font-bold mb-12 text-center">Keyboard Customization Options</h1>
 
+      {expandedKeycap && (
+        <ExpandedImage
+          src={expandedKeycap.image}
+          alt={expandedKeycap.name}
+          onClose={() => setExpandedKeycap(null)}
+        />
+      )}
+
       <section className="mb-12">
         <h2 className="text-3xl font-semibold mb-6">Keycap Options</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {keycapOptions.map((keycap, index) => (
             <div key={index} className="bg-alt-bg p-6 rounded-lg shadow-lg">
-              <Image
-                src={keycap.image || "/placeholder.svg"}
-                alt={keycap.name}
-                width={200}
-                height={200}
-                className="mx-auto mb-4"
-              />
+              <div 
+                className="cursor-pointer transition-transform hover:scale-105 relative hidden md:block"
+                onClick={() => setExpandedKeycap(keycap)}
+              >
+                <Image
+                  src={keycap.image || "/placeholder.svg"}
+                  alt={keycap.name}
+                  width={200}
+                  height={200}
+                  className="mx-auto mb-4"
+                />
+              </div>
+              <div className="md:hidden">
+                <Image
+                  src={keycap.image || "/placeholder.svg"}
+                  alt={keycap.name}
+                  width={200}
+                  height={200}
+                  className="mx-auto mb-4"
+                />
+              </div>
               <h3 className="text-xl font-semibold text-center">{keycap.name}</h3>
             </div>
           ))}
