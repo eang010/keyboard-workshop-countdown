@@ -46,7 +46,7 @@ const switchOptions: SwitchOption[] = [
   {
     name: "Blue",
     image: "/image/Blue.png?height=150&width=150",
-    type: "Clicky",
+    type: "Clicky (Loud)",
     actuation: "2.2mm",
     travel: "4.0mm",
     force: "50gf",
