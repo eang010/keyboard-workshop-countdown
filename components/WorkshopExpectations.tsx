@@ -6,7 +6,7 @@ export default function WorkshopExpectations() {
     "Tips & tricks for building a mechanical keyboard",
     "Assemble your custom keyboard",
     "Test and fine-tune your creation",
-    "Take home your custom mechanical keyboard",
+    "Take home your custom mechanical keyboard; 68-keys keyboard (Tri-mode)",
   ]
 
   return (
