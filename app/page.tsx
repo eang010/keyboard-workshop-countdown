@@ -16,7 +16,7 @@ export default function Home() {
     height: 0,
   });
   const [isExpanded, setIsExpanded] = useState(false)
-  const eventDate = new Date("2025-03-21T19:04:00+08:00")
+  const eventDate = new Date("2025-03-21T19:06:00+08:00")
 
   useEffect(() => {
     // Update window size
