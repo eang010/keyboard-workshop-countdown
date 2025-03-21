@@ -16,7 +16,7 @@ export default function Home() {
     height: 0,
   });
   const [isExpanded, setIsExpanded] = useState(false)
-  const eventDate = new Date("2025-03-24T14:30:00+08:00")
+  const eventDate = new Date("2025-03-21T19:03:00+08:00")
 
   useEffect(() => {
     // Update window size
@@ -39,22 +39,6 @@ export default function Home() {
 
   return (
     <main className="min-h-screen text-text flex flex-col">
-      <Confetti
-        width={windowSize.width}
-        height={windowSize.height}
-        numberOfPieces={50}
-        recycle={true}
-        confettiSource={{x: 0, y: 0, w: windowSize.width * 0.2, h: windowSize.height}}
-        opacity={0.6}
-      />
-      <Confetti
-        width={windowSize.width}
-        height={windowSize.height}
-        numberOfPieces={50}
-        recycle={true}
-        confettiSource={{x: windowSize.width * 0.8, y: 0, w: windowSize.width * 0.2, h: windowSize.height}}
-        opacity={0.6}
-      />
       <AudioPlayer />
       <div className="flex-grow flex items-center justify-center">
         <div className="text-center">
@@ -69,7 +53,7 @@ export default function Home() {
           <p className="text-sm mb-8 flex gap-2 justify-center">
             <span className="bg-alt-bg px-3 py-1 rounded-full text-text/60">#ISWellness</span>
           </p>
-          <CountdownTimer targetDate={eventDate} />
+          <CountdownTimer targetDate={eventDate} windowSize={windowSize} />
           <Link
               href="/options"
               className="inline-flex items-center mt-8 bg-alt-bg text-text px-6 py-3 rounded-lg shadow-md hover:bg-opacity-80 transition-colors duration-200"
